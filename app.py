@@ -112,8 +112,9 @@ with col_right:
 
     if normalize:
         magnitude = np.sqrt(U**2 + V**2)
-        U = U / (magnitude + 1e-8)
-        V = V / (magnitude + 1e-8)
+        magnitude[magnitude == 0] = 1e-8  # prevent dividing by zero
+        U /= magnitude
+        V /= magnitude
 
     # plot
     fig, ax = plt.subplots(figsize=(8, 6))
