@@ -52,7 +52,6 @@ with col_left:
 with col_right:
     st.subheader("Phase Portrait")
 
-    # arrow_spacing = 0.5
     density = 25  # increase this for more arrows
     x_vals = np.linspace(-xScale, xScale, density)
     y_vals = np.linspace(-yScale, yScale, density)
@@ -63,10 +62,12 @@ with col_right:
     V = g_func(st.session_state.t_value, X, Y)
 
     if normalize:
+        
         mag = np.sqrt(U**2 + V**2)
-        mag[mag == 0] = 1e-8
-        U /= mag
-        V /= mag
+        # if mag is not zero, divide by magnitude
+        if mag != 0:
+            U /= mag
+            V /= mag
 
     fig, ax = plt.subplots(figsize=(8, 6))
     ax.quiver(X, Y, U, V, color='blue')
