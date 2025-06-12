@@ -102,8 +102,8 @@ with col_right:
                 g_func(t_val, x_val, y_val),
             ]
 
-        t_span = (t_i, t_i + 10)
-        t_eval = np.linspace(*t_span, 300)
+        t_span = (t_i, t_i + 20)
+        t_eval = np.linspace(*t_span, 1000)
         sol = solve_ivp(system, t_span, [x0, y0], t_eval=t_eval)
 
         ax.plot(sol.y[0], sol.y[1], color='red', lw=2)
