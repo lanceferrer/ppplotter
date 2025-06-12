@@ -52,6 +52,7 @@ with col_left:
 with col_right:
     st.subheader("Phase Portrait")
 
+    # arrow_spacing = 0.5
     density = 25  # increase this for more arrows
     x_vals = np.linspace(-xScale, xScale, density)
     y_vals = np.linspace(-yScale, yScale, density)
@@ -61,15 +62,34 @@ with col_right:
     U = f_func(st.session_state.t_value, X, Y)
     V = g_func(st.session_state.t_value, X, Y)
 
+     # Ensure U and V are numpy arrays
+    U = np.asarray(U, dtype=float)
+    V = np.asarray(V, dtype=float)
+    
+    # Handle any NaN or infinity values
+    U = np.nan_to_num(U, nan=0.0, posinf=1e6, neginf=-1e6)
+    V = np.nan_to_num(V, nan=0.0, posinf=1e6, neginf=-1e6)
+
     if normalize:
-        
+        # Calculate magnitude
         mag = np.sqrt(U**2 + V**2)
-        mag[mag == 0] = 1
-        U /= mag
-        V /= mag
+        
+        # Avoid division by zero - set very small values to a small positive number
+        mag = np.where(mag < 1e-10, 1e-10, mag)
+        
+        # Normalize
+        U_norm = U / mag
+        V_norm = V / mag
+        
+        # Use normalized vectors
+        U_plot = U_norm
+        V_plot = V_norm
+    else:
+        U_plot = U
+        V_plot = V
 
     fig, ax = plt.subplots(figsize=(8, 6))
-    ax.quiver(X, Y, U, V, color='blue')
+    ax.quiver(X, Y, U_plot, V_plot, color='blue')
     ax.axhline(0, color='black', lw=0.5)
     ax.axvline(0, color='black', lw=0.5)
     ax.set_xlim(-xScale, xScale)
