@@ -21,8 +21,8 @@ with col_left:
     t, x, y = sp.symbols('t x y')
 
     # Input nonlinear functions f(t,x,y) and g(t,x,y) as strings
-    f_input = st.text_input("f(t, x, y) = x'", "sin(t) - x + y")
-    g_input = st.text_input("g(t, x, y) = y'", "cos(t) - y - x**2")
+    f_input = st.text_input("x' =", "sin(t) - x + y")
+    g_input = st.text_input("y' =", "cos(t) - y - x**2")
 
     # Initial condition inputs
     plot_integral_curve = st.checkbox("Plot integral curve", value=False)
