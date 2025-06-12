@@ -52,9 +52,10 @@ with col_left:
 with col_right:
     st.subheader("Phase Portrait")
 
-    arrow_spacing = 0.5
-    x_vals = np.linspace(-xScale, xScale, int((xScale * 2) / arrow_spacing))
-    y_vals = np.linspace(-yScale, yScale, int((yScale * 2) / arrow_spacing))
+    # arrow_spacing = 0.5
+    density = 25  # increase this for more arrows
+    x_vals = np.linspace(-xScale, xScale, density)
+    y_vals = np.linspace(-yScale, yScale, density)
     X, Y = np.meshgrid(x_vals, y_vals)
 
     # vector field evaluation
