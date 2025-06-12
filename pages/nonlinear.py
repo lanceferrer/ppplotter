@@ -71,19 +71,15 @@ with col_right:
     V = np.nan_to_num(V, nan=0.0, posinf=1e6, neginf=-1e6)
 
     if normalize:
-        # Calculate magnitude
-        mag = np.sqrt(U**2 + V**2)
-        
-        # Avoid division by zero - set very small values to a small positive number
-        mag = np.where(mag < 1e-10, 1e-10, mag)
-        
-        # Normalize
-        U_norm = U / mag
-        V_norm = V / mag
-        
-        # Use normalized vectors
-        U_plot = U_norm
-        V_plot = V_norm
+            # Calculate magnitude
+            mag = np.sqrt(U**2 + V**2)
+            
+            # Create mask for non-zero vectors
+            mask = mag > 0
+            
+            # Only normalize where magnitude > 0, keep original vectors elsewhere
+            U_plot = np.where(mask, U / mag, U)
+            V_plot = np.where(mask, V / mag, V)
     else:
         U_plot = U
         V_plot = V
