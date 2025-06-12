@@ -116,7 +116,7 @@ with col_left:
     
 
 with col_right:
-    st.subheader("Phase Plane")
+    st.subheader("Phase Portrait")
     
     arrow_spacing = 0.5
 
@@ -138,7 +138,7 @@ with col_right:
         U /= magnitude
         V /= magnitude
 
-    # plot
+    # plot settings
     fig, ax = plt.subplots(figsize=(8, 6))
     ax.quiver(X, Y, U, V, color='blue')
     ax.set_xlim(-xScale, xScale)
@@ -168,7 +168,7 @@ with col_right:
         except la.LinAlgError:
             st.warning("Eigenspace computation failed.")
             
-    # Plot integral curve
+    # plotting an integral curve
     if plot_integral_curve:
         def system(t_val, X_vec):
             A_t = np.array([

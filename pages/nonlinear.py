@@ -4,7 +4,6 @@ import matplotlib.pyplot as plt
 from scipy.integrate import solve_ivp
 import sympy as sp
 
-# Optional: page-level configuration (only if different from linear.py)
 st.set_page_config(layout="wide")
 
 col_left, col_right = st.columns([1, 2], gap="large")
@@ -17,30 +16,29 @@ with col_left:
     \end{cases}
     """)
 
-    # Symbols
     t, x, y = sp.symbols('t x y')
 
-    # Input nonlinear functions f(t,x,y) and g(t,x,y) as strings
+    # input nonlinear functions as strings
     f_input = st.text_input("x' =", "sin(t) - x + y")
     g_input = st.text_input("y' =", "cos(t) - y - x**2")
 
-    # Initial condition inputs
+    # initial conditions
     plot_integral_curve = st.checkbox("Plot integral curve", value=False)
     t_i = st.number_input("Initial time $t_i$", value=0.0, format="%.2f")
     x0 = st.number_input(r"Initial $x(t_i)$", value=1.0)
     y0 = st.number_input(r"Initial $y(t_i)$", value=0.0)
 
-    # Time slider for vector field evaluation
+    # slider for t
     if 't_value' not in st.session_state:
         st.session_state.t_value = 0.0
     st.session_state.t_value = st.slider("t", -10.0, 10.0, st.session_state.t_value, 0.1)
 
-    # Plot options
+    # options to normalize vectors and scale axes
     normalize = st.checkbox("Normalize arrows", value=True)
     xScale = st.number_input("X-axis scale", min_value=1, max_value=50, value=5)
     yScale = st.number_input("Y-axis scale", min_value=1, max_value=50, value=5)
 
-    # Parse inputs with sympy and lambdify
+    # parse inputs with sympy and lambdify
     try:
         f_expr = sp.sympify(f_input)
         g_expr = sp.sympify(g_input)
@@ -51,14 +49,14 @@ with col_left:
         st.stop()
 
 with col_right:
-    st.subheader("Phase Plane")
+    st.subheader("Phase Portrait")
 
     arrow_spacing = 0.5
     x_vals = np.linspace(-xScale, xScale, int((xScale * 2) / arrow_spacing))
     y_vals = np.linspace(-yScale, yScale, int((yScale * 2) / arrow_spacing))
     X, Y = np.meshgrid(x_vals, y_vals)
 
-    # Vector field evaluation at (t_value, X, Y)
+    # vector field evaluation
     U = f_func(st.session_state.t_value, X, Y)
     V = g_func(st.session_state.t_value, X, Y)
 
