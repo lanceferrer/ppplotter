@@ -1,8 +1,8 @@
 import streamlit as st
+import sympy as sp
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.integrate import solve_ivp
-import sympy as sp
 from utils.some_helpers import caret_to_exponent
 
 st.set_page_config(layout="wide")
