@@ -3,6 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.integrate import solve_ivp
 import sympy as sp
+from utils.some_helpers import caret_to_exponent
 
 st.set_page_config(layout="wide")
 
@@ -40,8 +41,8 @@ with col_left:
 
     # parse inputs with sympy and lambdify
     try:
-        f_expr = sp.sympify(f_input)
-        g_expr = sp.sympify(g_input)
+        f_expr = sp.sympify(caret_to_exponent(f_input))
+        g_expr = sp.sympify(caret_to_exponent(g_input))
         f_func = sp.lambdify((t, x, y), f_expr, 'numpy')
         g_func = sp.lambdify((t, x, y), g_expr, 'numpy')
     except (sp.SympifyError, Exception) as e:
