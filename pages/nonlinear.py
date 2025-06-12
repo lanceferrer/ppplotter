@@ -7,9 +7,6 @@ import sympy as sp
 # Optional: page-level configuration (only if different from linear.py)
 st.set_page_config(layout="wide")
 
-# Page title
-st.title("Phase Portrait Plotter (Nonlinear System)")
-
 col_left, col_right = st.columns([1, 2], gap="large")
 
 with col_left:
@@ -24,8 +21,8 @@ with col_left:
     t, x, y = sp.symbols('t x y')
 
     # Input nonlinear functions f(t,x,y) and g(t,x,y) as strings
-    f_input = st.text_area("f(t, x, y) = x'", "sin(t) - x + y")
-    g_input = st.text_area("g(t, x, y) = y'", "cos(t) - y - x**2")
+    f_input = st.text_input("f(t, x, y) = x'", "sin(t) - x + y")
+    g_input = st.text_input("g(t, x, y) = y'", "cos(t) - y - x**2")
 
     # Initial condition inputs
     plot_integral_curve = st.checkbox("Plot integral curve", value=False)
