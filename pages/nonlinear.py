@@ -64,10 +64,9 @@ with col_right:
     if normalize:
         
         mag = np.sqrt(U**2 + V**2)
-        # if mag is not zero, divide by magnitude
-        if mag != 0:
-            U /= mag
-            V /= mag
+        mag[mag == 0] = 1
+        U /= mag
+        V /= mag
 
     fig, ax = plt.subplots(figsize=(8, 6))
     ax.quiver(X, Y, U, V, color='blue')
