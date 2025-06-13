@@ -31,7 +31,6 @@ with col_left:
     # integration settings
     time_duration = st.number_input("Integration duration", min_value=1.0, max_value=200.0, value=50.0)
     tolerance = max(1e-10,1e-8 * min(1.0, 10.0 / time_duration))
-    num_points = int(1000 * time_duration / 50.0)
 
     # slider for t
     if 't_value' not in st.session_state:
@@ -106,10 +105,9 @@ with col_right:
                 return [float(dx_dt), float(dy_dt)]
 
         t_span = (t_i, t_i + time_duration)
-        t_eval = np.linspace(*t_span, num_points)  # More points for smoother curves
             
         try:
-            sol = solve_ivp(system, t_span, [x0, y0], t_eval=t_eval, 
+            sol = solve_ivp(system, t_span, [x0, y0], 
                             method='RK45', rtol=tolerance, atol=tolerance*1e-2, dense_output=True,
                             max_step=min(0.1, time_duration/100))  # Limit step size for better accuracy
             
