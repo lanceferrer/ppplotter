@@ -114,13 +114,11 @@ with col_right:
                             max_step=0.1)  # Limit step size for better accuracy
             
             if sol.success:
-                ax.plot(sol.y[0], sol.y[1], color='red', lw=2, label='Trajectory')
-                ax.scatter([x0], [y0], color='red', s=50, zorder=5, label='Initial point')
+                ax.plot(sol.y[0], sol.y[1], color='red', lw=2, zorder=1)
+                ax.scatter([x0], [y0], color='red', s=50, zorder=5)
                 
                 # Mark the final point
-                ax.scatter([sol.y[0][-1]], [sol.y[1][-1]], color='darkred', s=30, zorder=5, marker='x')
-                
-                ax.legend()
+                ax.scatter([sol.y[0][-1]], [sol.y[1][-1]], color='darkred', s=30, zorder=5)
             else:
                 st.warning(f"Integration failed: {sol.message}")
         except Exception as e:
