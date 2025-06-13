@@ -110,7 +110,7 @@ with col_right:
             
         try:
             sol = solve_ivp(system, t_span, [x0, y0], t_eval=t_eval, 
-                            method='RK45', rtol=tolerance, atol=tolerance*1e-2,
+                            method='RK45', rtol=tolerance, atol=tolerance*1e-2, dense_output=True,
                             max_step=min(0.1, time_duration/100))  # Limit step size for better accuracy
             
             if sol.success:
