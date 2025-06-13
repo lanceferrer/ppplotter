@@ -30,7 +30,7 @@ with col_left:
     y0 = st.number_input(r"Initial $y(t_i)$", value=0.0)
     # integration settings
     time_duration = st.number_input("Integration duration", min_value=1.0, max_value=200.0, value=50.0)
-    tolerance = 1e-8 * min(1.0, 10.0 / time_duration)
+    tolerance = max(1e-10,1e-8 * min(1.0, 10.0 / time_duration))
     num_points = int(1000 * time_duration / 50.0)
 
     # slider for t
@@ -110,8 +110,8 @@ with col_right:
             
         try:
             sol = solve_ivp(system, t_span, [x0, y0], t_eval=t_eval, 
-                            method='RK45', rtol=tolerance, atol=tolerance*1e-3,
-                            max_step=0.1)  # Limit step size for better accuracy
+                            method='RK45', rtol=tolerance, atol=tolerance*1e-2,
+                            max_step=min(0.1, time_duration/100))  # Limit step size for better accuracy
             
             if sol.success:
                 ax.plot(sol.y[0], sol.y[1], color='red', lw=2, zorder=1)
